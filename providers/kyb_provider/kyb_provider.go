@@ -1,10 +1,10 @@
 package kyb_provider
 
 import (
+	"github.com/lelinu/loki/clients/soap"
+	"github.com/lelinu/loki/domain/kyb"
 	"encoding/xml"
 	"io/ioutil"
-	"loki/clients/soap"
-	"loki/domain/kyb"
 	"net/http"
 	"net/url"
 )

@@ -1,4 +1,4 @@
-module loki
+module github.com/lelinu/loki
 
 go 1.13
 

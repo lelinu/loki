@@ -2,10 +2,10 @@ package kyb_provider
 
 import (
 	"errors"
+	"github.com/lelinu/loki/clients/soap"
+	"github.com/lelinu/loki/domain/kyb"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
-	"loki/clients/soap"
-	"loki/domain/kyb"
 	"net/http"
 	"net/url"
 	"os"
@@ -24,25 +24,25 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
-func TestVariables(t *testing.T){
+func TestVariables(t *testing.T) {
 	assert.NotNil(t, urlBase)
 	assert.EqualValues(t, url.URL{
-		Scheme:     "https",
-		Host:       "localhost:44300",
-		Path:       "Service.asmx",
+		Scheme: "https",
+		Host:   "localhost:44300",
+		Path:   "Service.asmx",
 	}, urlBase)
 
 	assert.NotNil(t, actionAcknowledgeDecision)
 	assert.EqualValues(t, "AcknowledgeDecision", actionAcknowledgeDecision)
 }
 
-func TestNewProviderWithSoapClient(t *testing.T){
+func TestNewProviderWithSoapClient(t *testing.T) {
 	provider := NewProvider(soapClient)
 	assert.NotNil(t, provider)
 	assert.NotNil(t, provider.soapClient)
 }
 
-func TestNewProviderWithoutSoapClient(t *testing.T){
+func TestNewProviderWithoutSoapClient(t *testing.T) {
 	provider := NewProvider(nil)
 	assert.NotNil(t, provider)
 	assert.NotNil(t, provider.soapClient)
