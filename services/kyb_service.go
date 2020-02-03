@@ -13,12 +13,8 @@ type kybService struct {
 	kybProvider *check_provider.Provider
 }
 
-type kybServiceInterface interface {
-	AcknowledgeDecision(request *kyb.AcknowledgeDecisionRequest) (*kyb.AcknowledgeDecisionResponse, errors.ApiErrorInterface)
-}
-
 var (
-	KybService kybServiceInterface
+	KybService KybServiceInterface
 )
 
 func NewKybService(kybProvider *check_provider.Provider) *kybService {

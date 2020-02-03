@@ -18,7 +18,17 @@ var(
 		Host:   "localhost:44300",
 		Path:   "Service.asmx",
 	}
+	apiVersionUrl = "v1"
+	apiPort = ":8080"
 )
+
+func GetApiVersionUrl() string{
+	return apiVersionUrl
+}
+
+func GetApiPort() string{
+	return apiPort
+}
 
 func GetCheckUsername() string{
 	return checkUsername
@@ -31,3 +41,4 @@ func GetCheckPassword() string{
 func GetCheckUrlBase() url.URL{
 	return checkUrlBase
 }
+

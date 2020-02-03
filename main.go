@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
+import "github.com/lelinu/loki/app"
 
 func main() {
-	fmt.Printf("This is the main function...")
+	app.StartApp()
 }

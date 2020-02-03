@@ -1,25 +1,13 @@
 package app
 
 import (
-	"fmt"
+	"github.com/lelinu/loki/config"
+	"github.com/lelinu/loki/routes"
 )
 
-var (
-	router *gin.Engine
-)
-
-func init() {
-	router = gin.Default()
-}
-
-//StartApp is the main function of the project
-func StartApp() {
-	fmt.Println("Starting API on port 8080")
-
-	addRoutes()
-
-	if err := router.Run(":8080"); err != nil {
+func StartApp(){
+	router := routes.BuildRouter()
+	if err := router.Run(config.GetApiPort()); err != nil{
 		panic(err)
 	}
 }
-
