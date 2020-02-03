@@ -1,13 +1,13 @@
-package kyb_provider
+package check_provider
 
 import (
 	"errors"
 	"github.com/lelinu/loki/clients/soap"
-	"github.com/lelinu/loki/domain/kyb"
+	"github.com/lelinu/loki/config"
+	"github.com/lelinu/loki/domain/check"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"net/http"
-	"net/url"
 	"os"
 	"strings"
 	"testing"
@@ -18,20 +18,13 @@ var (
 )
 
 func TestMain(m *testing.M) {
-	soapClient = soap.NewClient(nil, urlBase)
+	soapClient = soap.NewClient(nil, config.GetCheckUrlBase())
 	soapClient.SetMock(true)
 
 	os.Exit(m.Run())
 }
 
 func TestVariables(t *testing.T) {
-	assert.NotNil(t, urlBase)
-	assert.EqualValues(t, url.URL{
-		Scheme: "https",
-		Host:   "localhost:44300",
-		Path:   "Service.asmx",
-	}, urlBase)
-
 	assert.NotNil(t, actionAcknowledgeDecision)
 	assert.EqualValues(t, "AcknowledgeDecision", actionAcknowledgeDecision)
 }
@@ -60,7 +53,7 @@ func TestAcknowledgeDecisionErrorSoapClient(t *testing.T) {
 	soapClient.AddMock(mock)
 	provider := NewProvider(soapClient)
 
-	response, err := provider.AcknowledgeDecision(&kyb.AcknowledgeDecisionRequest{})
+	response, err := provider.AcknowledgeDecision(&check.AcknowledgeDecisionRequest{})
 	assert.Nil(t, response)
 	assert.NotNil(t, err)
 	assert.EqualValues(t, http.StatusInternalServerError, err.Code)
@@ -83,7 +76,7 @@ func TestAcknowledgeDecisionInvalidResponseBody(t *testing.T) {
 	soapClient.AddMock(mock)
 	provider := NewProvider(soapClient)
 
-	response, err := provider.AcknowledgeDecision(&kyb.AcknowledgeDecisionRequest{})
+	response, err := provider.AcknowledgeDecision(&check.AcknowledgeDecisionRequest{})
 
 	assert.Nil(t, response)
 	assert.NotNil(t, err)
@@ -107,7 +100,7 @@ func TestAcknowledgeDecisionInvalidErrorInterface(t *testing.T) {
 	soapClient.AddMock(mock)
 	provider := NewProvider(soapClient)
 
-	response, err := provider.AcknowledgeDecision(&kyb.AcknowledgeDecisionRequest{})
+	response, err := provider.AcknowledgeDecision(&check.AcknowledgeDecisionRequest{})
 
 	assert.Nil(t, response)
 	assert.NotNil(t, err)
@@ -130,7 +123,7 @@ func TestAcknowledgeDecisionInvalidSuccessResponse(t *testing.T) {
 	soapClient.AddMock(mock)
 	provider := NewProvider(soapClient)
 
-	response, err := provider.AcknowledgeDecision(&kyb.AcknowledgeDecisionRequest{})
+	response, err := provider.AcknowledgeDecision(&check.AcknowledgeDecisionRequest{})
 
 	assert.Nil(t, response)
 	assert.NotNil(t, err)
@@ -153,7 +146,7 @@ func TestAcknowledgeDecisionUnauthorized(t *testing.T) {
 	soapClient.AddMock(mock)
 	provider := NewProvider(soapClient)
 
-	response, err := provider.AcknowledgeDecision(&kyb.AcknowledgeDecisionRequest{})
+	response, err := provider.AcknowledgeDecision(&check.AcknowledgeDecisionRequest{})
 
 	assert.Nil(t, response)
 	assert.NotNil(t, err)
@@ -175,7 +168,7 @@ func TestAcknowledgeDecisionValidResponse(t *testing.T) {
 	soapClient.AddMock(mock)
 	provider := NewProvider(soapClient)
 
-	response, err := provider.AcknowledgeDecision(&kyb.AcknowledgeDecisionRequest{})
+	response, err := provider.AcknowledgeDecision(&check.AcknowledgeDecisionRequest{})
 
 	assert.NotNil(t, response)
 	assert.Nil(t, err)

@@ -1,4 +1,4 @@
-package kyb
+package check
 
 import "encoding/xml"
 
